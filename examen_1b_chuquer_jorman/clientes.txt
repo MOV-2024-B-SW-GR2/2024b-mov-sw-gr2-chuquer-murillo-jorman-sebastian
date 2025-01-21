@@ -1,0 +1,5 @@
+1|Cliente 0|cliente0@email.com|1234567890|2024-12-08
+2|Cliente 1|cliente1@email.com|1234567891|2024-12-08
+3|Cliente 2|cliente2@email.com|1234567892|2024-12-08
+4|Cliente 3|cliente3@email.com|1234567893|2024-12-08
+6|jorman chuquer|j2@j.com|1234567890|2024-12-08
