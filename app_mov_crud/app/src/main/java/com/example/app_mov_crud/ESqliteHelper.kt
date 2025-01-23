@@ -32,23 +32,17 @@ class ESqliteHelper(
             monto REAL,
             cantidad INTEGER,
             cliente_id INTEGER,
-            FOREIGN KEY(cliente_id) REFERENCES CLIENTES(id) ON DELETE CASCADE
+            FOREIGN KEY(cliente_id) REFERENCES CLIENTE(id) ON DELETE CASCADE
         );
     """
         db?.execSQL(crearTablaPedidos)
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
-        if (oldVersion < newVersion) {
-            db?.execSQL("DROP TABLE IF EXISTS CLIENTE")
-            db?.execSQL("DROP TABLE IF EXISTS PEDIDO")
-            onCreate(db)
-        }
+
     }
     override fun onConfigure(db: SQLiteDatabase?) {
-        super.onConfigure(db)
-        db?.setForeignKeyConstraintsEnabled(true)
-        //constraints necesarias para habilitar las claves foráneas
+
     }
 
 
