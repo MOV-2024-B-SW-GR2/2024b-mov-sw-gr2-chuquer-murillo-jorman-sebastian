@@ -3,25 +3,28 @@ package com.example.app_mov_crud
 import android.os.Parcel
 import android.os.Parcelable
 
-
-class Clientes(
-    var id: Int,
+class Cliente(
+    var id: Int = 0,
     var nombre: String,
     var email: String?,
     var telefono: String?,
     var fecha_registro: String?
+) : Parcelable {
 
-):Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readInt(),
-        if(parcel.readString()== null) "" else parcel.readString()!!,
-        parcel.readString() ,
+        parcel.readString()!!,
+        parcel.readString(),
         parcel.readString(),
         parcel.readString()
     )
-
-
-
+    constructor(nombre: String, email: String?, telefono: String?, fecha_registro: String?) : this(
+        0,
+        nombre,
+        email,
+        telefono,
+        fecha_registro
+    )
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeInt(id)
         parcel.writeString(nombre)
@@ -34,12 +37,12 @@ class Clientes(
         return 0
     }
 
-    companion object CREATOR : Parcelable.Creator<Clientes> {
-        override fun createFromParcel(parcel: Parcel): Clientes {
-            return Clientes(parcel)
+    companion object CREATOR : Parcelable.Creator<Cliente> {
+        override fun createFromParcel(parcel: Parcel): Cliente {
+            return Cliente(parcel)
         }
 
-        override fun newArray(size: Int): Array<Clientes?> {
+        override fun newArray(size: Int): Array<Cliente?> {
             return arrayOfNulls(size)
         }
     }
