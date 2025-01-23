@@ -29,7 +29,7 @@ class ESqliteHelper(
         CREATE TABLE PEDIDO(
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             descripcion VARCHAR(50),
-            monto REAL,
+            monto Double,
             cantidad INTEGER,
             cliente_id INTEGER,
             FOREIGN KEY(cliente_id) REFERENCES CLIENTE(id) ON DELETE CASCADE

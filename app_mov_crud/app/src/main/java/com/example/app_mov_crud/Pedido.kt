@@ -12,14 +12,11 @@ class Pedido (
 ):Parcelable{
     constructor(parcel: Parcel): this(
         parcel.readInt(),
-        if(parcel.readString()==null) "" else parcel.readString()!!,
+        parcel.readString()!!,
         parcel.readDouble(),
         parcel.readInt(),
         parcel.readInt()
     )
-    constructor(descripcion: String, monto: Double, cantidad: Int, cliente_id: Int): this(0, descripcion, monto, cantidad, cliente_id)
-
-
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeInt(id)

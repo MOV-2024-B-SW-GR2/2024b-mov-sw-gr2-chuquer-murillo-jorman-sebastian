@@ -1,5 +1,6 @@
 package com.example.app_mov_crud
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
@@ -20,7 +21,8 @@ class ActivityAgregarEditarPedidos : AppCompatActivity() {
         )
         snack.show()
     }
-    override fun onCreate(savedInstanceState: Bundle?){
+
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_agregar_editar_pedidos)
         controlador = EntityController(this)
@@ -30,33 +32,42 @@ class ActivityAgregarEditarPedidos : AppCompatActivity() {
         val monto = findViewById<EditText>(R.id.monto_in)
         cliente_seleccionado = intent.getStringExtra("clienteId")?.toIntOrNull()
         pedido_seleccionado = intent.getStringExtra("pedidoId")?.toIntOrNull()
-        pedido_seleccionado?.let{ id ->
-            val pedido = controlador.listarPedidosPorCliente(cliente_seleccionado!!).find { it.id == pedido_seleccionado }
-            pedido?.let{
-                descripcion.setText(it.descripcion.toString())
-                cantidad.setText(it.cantidad.toString())
-                monto.setText(it.monto.toString())
-            }
 
+        pedido_seleccionado?.let {
+            val pedido = controlador.listarPedidosPorCliente(cliente_seleccionado)
+                .find { it.id == pedido_seleccionado }
+            if (pedido != null) {
+                descripcion.setText(pedido.descripcion)
+                cantidad.setText(pedido.cantidad.toString())
+                monto.setText(pedido.monto.toString())
+            }
         }
+
         btnAgregarPedido.setOnClickListener {
-            val descripcion = descripcion.text.toString()
-            val cantidad = cantidad.text.toString().toIntOrNull()
-            val monto = monto.text.toString().toDoubleOrNull()
-            if(descripcion.isNotBlank() && cantidad != null && monto != null){
-                if(pedido_seleccionado != null){
+            val descripcionText = descripcion.text.toString()
+            val cantidadText = cantidad.text.toString().toIntOrNull()
+            val montoText = monto.text.toString().toDoubleOrNull()
+            if (descripcionText.isNotBlank() && cantidadText != null && montoText != null) {
+                if (pedido_seleccionado != null) {
                     controlador.actualizarPedido(
-                        Pedido(pedido_seleccionado!!,descripcion, monto, cantidad, cliente_seleccionado!!)
+                        Pedido(
+                            pedido_seleccionado!!,
+                            descripcionText,
+                            montoText,
+                            cantidadText,
+                            cliente_seleccionado!!
+                        )
                     )
                     mostrarSnackbar("Pedido actualizado")
-                }else{
-
+                } else {
                     controlador.crearPedido(
-                        Pedido(descripcion, monto, cantidad, cliente_seleccionado!!)
+                        Pedido(1, descripcionText, montoText, cantidadText, cliente_seleccionado!!)
                     )
                     mostrarSnackbar("Pedido creado")
                 }
-                finish()
+                val intent = Intent(this, ActivityListarPedidos::class.java)
+                intent.putExtra("clienteId", cliente_seleccionado.toString())
+                startActivity(intent)
             }
         }
     }

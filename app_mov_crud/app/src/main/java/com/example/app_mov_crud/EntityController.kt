@@ -15,7 +15,8 @@ class EntityController (context: Context) {
             put("telefono", cliente.telefono)
             put("fecha_registro", cliente.fecha_registro)
         }
-        db.insert("CLIENTE", null, valores)
+
+        var resultado = db.insert("CLIENTE", null, valores)
         db.close()
     }
     //Listar clientes
@@ -64,8 +65,9 @@ class EntityController (context: Context) {
         db.close()
         return filas > 0
     }
+
     //Crear un pedido
-    fun crearPedido(pedido: Pedido) {
+    fun crearPedido(pedido: Pedido) :Boolean{
         val db = dbHelper.writableDatabase
         val valores = ContentValues().apply {
             put("descripcion", pedido.descripcion)
@@ -73,11 +75,13 @@ class EntityController (context: Context) {
             put("cantidad", pedido.cantidad)
             put("cliente_id", pedido.cliente_id)
         }
-        db.insert("PEDIDO", null, valores)
+        val resultado = db.insert("PEDIDO", null, valores)
         db.close()
+        return resultado != -1L
     }
+
     //Listar pedidos de un cliente
-    fun listarPedidosPorCliente(clienteId: Int?): List<Pedido> {
+    fun listarPedidosPorCliente(clienteId: Int?): ArrayList<Pedido> {
         val db = dbHelper.writableDatabase
         val posicion = db.rawQuery("SELECT * FROM PEDIDO WHERE cliente_id = ?", arrayOf(clienteId.toString()))
         val pedidos = arrayListOf<Pedido>()
@@ -133,5 +137,41 @@ class EntityController (context: Context) {
             val cliente_id = posicion.getInt(posicion.getColumnIndexOrThrow("cliente_id"))
             println("ID: $id, Descripcion: $descripcion, Monto: $monto, Cantidad: $cantidad, Cliente ID: $cliente_id")
         }
+    }
+
+    fun obtenerUltimoPedido(clienteId: Int): Pedido? {
+        val db = dbHelper.readableDatabase
+        val posicion = db.rawQuery("SELECT * FROM PEDIDO WHERE cliente_id = ? ORDER BY id DESC LIMIT 1", arrayOf(clienteId.toString()))
+        var pedido: Pedido? = null
+
+        if (posicion.moveToFirst()) {
+            val id = posicion.getInt(0)
+            val descripcion = posicion.getString(1)
+            val monto = posicion.getDouble(2)
+            val cantidad = posicion.getInt(3)
+            val clienteIdDesdeBD = posicion.getInt(4)
+            pedido = Pedido(id, descripcion, monto, cantidad, clienteIdDesdeBD)
+        }
+
+        posicion.close()
+        db.close()
+        return pedido
+    }
+
+    fun obtenerPedido(pedidoSeleccionado: Int): Pedido{
+        val db = dbHelper.readableDatabase
+        val posicion = db.rawQuery("SELECT * FROM PEDIDO WHERE id = ?", arrayOf(pedidoSeleccionado.toString()))
+        var pedido: Pedido? = null
+        if(posicion.moveToFirst()){
+            val id = posicion.getInt(0)
+            val descripcion = posicion.getString(1)
+            val monto = posicion.getDouble(2)
+            val cantidad = posicion.getInt(3)
+            val cliente_id = posicion.getInt(4)
+            pedido = Pedido(id, descripcion, monto, cantidad, cliente_id)
+        }
+        posicion.close()
+        db.close()
+        return pedido!!
     }
 }
