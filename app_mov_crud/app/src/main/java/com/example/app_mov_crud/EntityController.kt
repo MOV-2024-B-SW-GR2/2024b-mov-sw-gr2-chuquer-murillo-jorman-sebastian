@@ -14,6 +14,8 @@ class EntityController (context: Context) {
             put("email", cliente.email)
             put("telefono", cliente.telefono)
             put("fecha_registro", cliente.fecha_registro)
+            put("latitud", cliente.latitud)
+            put("longitud", cliente.longitud)
         }
 
         var resultado = db.insert("CLIENTE", null, valores)
@@ -30,7 +32,9 @@ class EntityController (context: Context) {
             val email = posicion.getString(2)
             val telefono = posicion.getString(3)
             val fecha_registro = posicion.getString(4)
-            clientes.add(Cliente(id, nombre, email, telefono, fecha_registro))
+            val latitud = posicion.getDouble(5)
+            val longitud = posicion.getDouble(6)
+            clientes.add(Cliente(id, nombre, email, telefono, fecha_registro, latitud, longitud))
         }
         posicion.close()
         db.close()
@@ -44,6 +48,8 @@ class EntityController (context: Context) {
             put("email", cliente.email)
             put("telefono", cliente.telefono)
             put("fecha_registro", cliente.fecha_registro)
+            put("latitud", cliente.latitud)
+            put("longitud", cliente.longitud)
         }
         val rows = db.update(
             "CLIENTE",

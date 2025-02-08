@@ -8,7 +8,9 @@ class Cliente(
     var nombre: String,
     var email: String?,
     var telefono: String?,
-    var fecha_registro: String?
+    var fecha_registro: String?,
+    var latitud: Double,
+    var longitud: Double
 ) : Parcelable {
 
     constructor(parcel: Parcel) : this(
@@ -16,14 +18,18 @@ class Cliente(
         parcel.readString()!!,
         parcel.readString(),
         parcel.readString(),
-        parcel.readString()
+        parcel.readString(),
+        parcel.readDouble(),
+        parcel.readDouble()
     )
-    constructor(nombre: String, email: String?, telefono: String?, fecha_registro: String?) : this(
+    constructor(nombre: String, email: String?, telefono: String?, fecha_registro: String?, latitud: Double, longitud: Double) : this(
         0,
         nombre,
         email,
         telefono,
-        fecha_registro
+        fecha_registro,
+        latitud,
+        longitud
     )
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeInt(id)
@@ -31,6 +37,8 @@ class Cliente(
         parcel.writeString(email)
         parcel.writeString(telefono)
         parcel.writeString(fecha_registro)
+        parcel.writeDouble(latitud)
+        parcel.writeDouble(longitud)
     }
 
     override fun describeContents(): Int {

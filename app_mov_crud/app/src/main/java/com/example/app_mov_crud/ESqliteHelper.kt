@@ -20,7 +20,9 @@ class ESqliteHelper(
             nombre VARCHAR(50),
             email VARCHAR(50),
             telefono VARCHAR(50),
-            fecha_registro VARCHAR(50)
+            fecha_registro VARCHAR(50),
+            latitud DOUBLE,
+            longitud DOUBLE
         );
     """
         db?.execSQL(crearTablaClientes)

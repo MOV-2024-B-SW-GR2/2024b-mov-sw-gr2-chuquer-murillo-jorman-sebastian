@@ -11,4 +11,7 @@
     <item
         android:id="@+id/context_menu_eliminar_cliente"
         android:title="Eliminar Cliente" />
+    <item
+        android:id="@+id/context_menu_ver_ubicacion"
+        android:title="Ver ubicación" />
 </menu>

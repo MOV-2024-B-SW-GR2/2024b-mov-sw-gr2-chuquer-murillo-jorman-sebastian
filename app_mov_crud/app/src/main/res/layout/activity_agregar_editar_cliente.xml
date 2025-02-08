@@ -13,8 +13,8 @@
         android:layout_height="47dp"
         android:layout_marginTop="16dp"
         android:ems="10"
+        android:hint="Teléfono"
         android:inputType="text"
-        android:text="Telefono"
         app:layout_constraintEnd_toEndOf="@+id/email_in"
         app:layout_constraintHorizontal_bias="0.666"
         app:layout_constraintStart_toStartOf="@+id/email_in"
@@ -26,8 +26,8 @@
         android:layout_height="46dp"
         android:layout_marginTop="16dp"
         android:ems="10"
+        android:hint="Nombre"
         android:inputType="text"
-        android:text="Nombre"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
@@ -37,10 +37,10 @@
         android:id="@+id/email_in"
         android:layout_width="323dp"
         android:layout_height="44dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="24dp"
         android:ems="10"
+        android:hint="Email"
         android:inputType="text"
-        android:text="Email"
         app:layout_constraintEnd_toEndOf="@+id/nombre_in"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/nombre_in"
@@ -66,25 +66,52 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.609" />
+        app:layout_constraintVertical_bias="0.95" />
 
     <EditText
         android:id="@+id/fecha_registro_in"
         android:layout_width="323dp"
         android:layout_height="45dp"
-        android:layout_marginBottom="24dp"
+        android:layout_marginTop="20dp"
         android:ems="10"
+        android:hint="Fecha de registro"
         android:inputType="text"
-        android:text="Fecha de registro"
-        app:layout_constraintBottom_toTopOf="@+id/btn_guardar_cliente"
         app:layout_constraintEnd_toEndOf="@+id/telefono_in"
-        app:layout_constraintStart_toStartOf="@+id/telefono_in" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/telefono_in"
+        app:layout_constraintTop_toBottomOf="@+id/telefono_in" />
+
+    <EditText
+        android:id="@+id/etLatitud"
+        android:layout_width="319dp"
+        android:layout_height="43dp"
+        android:layout_marginTop="28dp"
+        android:hint="Latitud"
+        android:inputType="text"
+        app:layout_constraintEnd_toEndOf="@+id/fecha_registro_in"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/fecha_registro_in"
+        app:layout_constraintTop_toBottomOf="@+id/fecha_registro_in" />
+
+    <EditText
+        android:id="@+id/etLongitud"
+        android:layout_width="321dp"
+        android:layout_height="46dp"
+        android:layout_marginBottom="76dp"
+        android:hint="Longitud"
+        android:inputType="text"
+        app:layout_constraintBottom_toTopOf="@+id/btn_guardar_cliente"
+        app:layout_constraintEnd_toEndOf="@+id/etLatitud"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/etLatitud"
+        app:layout_constraintTop_toBottomOf="@+id/etLatitud"
+        app:layout_constraintVertical_bias="0.918" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="20dp" />
+        app:layout_constraintGuide_begin="77dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

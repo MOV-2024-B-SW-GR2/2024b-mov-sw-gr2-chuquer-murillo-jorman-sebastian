@@ -88,6 +88,15 @@ class MainActivity : AppCompatActivity() {
                     actualizarLista()
                 } ?: mostrarSnackbar("Error al eliminar cliente")
             }
+            R.id.context_menu_ver_ubicacion ->{
+                cliente_seleccionado?.let {
+                    val intent = Intent(this, MapsActivity::class.java)
+                    intent.putExtra("latitud", it.latitud)
+                    intent.putExtra("longitud", it.longitud)
+                    intent.putExtra("nombre", it.nombre)
+                    startActivity(intent)
+                }
+            }
         }
         return super.onContextItemSelected(item)
     }

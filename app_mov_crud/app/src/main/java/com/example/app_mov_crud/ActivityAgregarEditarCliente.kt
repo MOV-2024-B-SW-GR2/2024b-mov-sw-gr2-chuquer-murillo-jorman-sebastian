@@ -29,6 +29,8 @@ class ActivityAgregarEditarCliente : AppCompatActivity() {
         val telefono = findViewById<EditText>(R.id.telefono_in)
         val fecha_registro = findViewById<EditText>(R.id.fecha_registro_in)
         val btnguardarCliente = findViewById<Button>(R.id.btn_guardar_cliente)
+        val latitud = findViewById<EditText>(R.id.etLatitud)
+        val longitud = findViewById<EditText>(R.id.etLongitud)
 
         cliente_seleccionado = intent.getStringExtra("clienteId")?.toIntOrNull()
         cliente_seleccionado?.let { id ->
@@ -38,6 +40,8 @@ class ActivityAgregarEditarCliente : AppCompatActivity() {
                 email.setText(it.email)
                 telefono.setText(it.telefono)
                 fecha_registro.setText(it.fecha_registro)
+                latitud.setText(it.latitud.toString())
+                longitud.setText(it.longitud.toString())
             }
         }
 
@@ -46,16 +50,18 @@ class ActivityAgregarEditarCliente : AppCompatActivity() {
             val emailText = email.text.toString()
             val telefonoText = telefono.text.toString()
             val fechaRegistroText = fecha_registro.text.toString()
+            val latitudText = latitud.text.toString().toDoubleOrNull() ?: 0.0
+            val longitudText = longitud.text.toString().toDoubleOrNull() ?: 0.0
 
             if (nombreText.isNotBlank() && emailText.isNotBlank() && telefonoText.isNotBlank() && fechaRegistroText.isNotBlank()) {
                 if (cliente_seleccionado != null) {
                     controlador.actualizarCliente(
-                        Cliente(cliente_seleccionado!!, nombreText, emailText, telefonoText, fechaRegistroText)
+                        Cliente(cliente_seleccionado!!, nombreText, emailText, telefonoText, fechaRegistroText, latitudText, longitudText)
                     )
                     mostrarSnackbar("Cliente actualizado")
                 } else {
                     controlador.crearCliente(
-                        Cliente(nombreText, emailText, telefonoText, fechaRegistroText)
+                        Cliente(nombreText, emailText, telefonoText, fechaRegistroText, latitudText, longitudText)
                     )
                     mostrarSnackbar("Cliente creado")
                 }
